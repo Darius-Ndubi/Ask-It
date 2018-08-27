@@ -31,6 +31,12 @@ DAO.create({'username':'Sharon','title': 'Deploy the API','description':'Heroku 
 @ns.route('/')
 class QuestionList(Resource):
 
+    '''Shows a list of all questions, and lets you POST to add new tasks'''
+    @ns.doc('list_questions')
+    @ns.marshal_list_with(question)
+    def get(self):
+        '''List all questions'''
+        return DAO.questions
 
 
     @jwt_required

@@ -23,9 +23,14 @@ def test_QuestionList_empty_description():
         json.loads(response.data.decode('utf-8'))
         assert(response.status_code == 400)
 
-def test_QuestionList_successfull():
+def test_QuestionList_successfull_post():
     with app.app_context():
         result = app.test_client()
         tok=login_token(mock_reg[4].get('id'))
         response = result.post('/questions/', data=json.dumps(mock_ques[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         assert(response.status_code == 201)
+
+def test_QuestionList_successfull_get():
+    result = app.test_client()
+    response = result.get('/questions/',content_type='application/json')
+    assert(response.status_code == 200)
