@@ -34,3 +34,20 @@ class Answer(Resource):
 
         user_id = get_jwt_identity()
         return AAO.create_answer (question_id, api.payload,user_id), 201
+
+
+
+
+@ns.route('/<int:question_id>/answers/<int:answer_id>')
+@ns.response(404, 'answer not found')
+@ns.param('question_id', 'The question identifier')
+class AnswerActions(Resource):
+
+    @jwt_required
+    @ns.doc('get specific answer')
+    @ns.marshal_with(answer, code=200)
+    def get(self,question_id,answer_id):
+        '''locate an answer by its id'''
+
+        user_id = get_jwt_identity()
+        return AAO.find_specific_answer_to_question (question_id,answer_id,user_id)

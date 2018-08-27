@@ -42,3 +42,16 @@ class AnswerDAO(QuestionDAO):
 
             api.abort(404, "answers for question {} dont exist".format(question_id))
         
+
+    def find_specific_answer_to_question(self,question_id,answer_id,user_id):
+        uname=DAO.get_username(user_id)
+        answers=self.find_all_answers_to_question(question_id,user_id)
+
+        if uname != None:
+            for answer in answers:
+                if answer.get('id') == answer_id:
+                    return answer
+                
+                else:
+                    api.abort(404, "The answer {} dont exist".format(answer_id))
+                
