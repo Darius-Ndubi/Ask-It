@@ -1,6 +1,7 @@
 import pytest
 from flask import json
 from app import app
+from flask_jwt_extended import create_access_token
 
 mock_reg=[{"email":"","username":"delight","password":"delight","confirm_password":"delight"},
           {"email":"yagamidelightgmail.com","username":"delight","password":"delight","confirm_password":"delight"},
@@ -17,6 +18,22 @@ mock_reg=[{"email":"","username":"delight","password":"delight","confirm_passwor
           {"email":"yagamidelight@gmail.com","username":"","password":"delight","confirm_password":"delight"},
           {"email":"yagamidelight@gmail.com","username":"      ","password":"delight","confirm_password":"delight"}
 ]
+
+mock_log=[{"email":123,"password":"delight"},
+          {"email":"","password":"delight"},
+          {"email":"yagamidelight.com","password":"delight"},
+          {"email":"yagamidelight@gmail","password":"delight"},
+
+          {"email":"yagamidelight@gmail.com","password":123},
+          {"email":"yagamidelight@gmail.com","password":"deli"},
+
+          {"email":"yagamidelight@gmail","password":"string@12"}            
+]
+
+#create_login_token
+def login_token(uname):
+    access_token = create_access_token(uname)
+    return access_token
 
 
 #email checks
@@ -91,3 +108,49 @@ def test_signup_correct_data():
     json.loads(response.data.decode('utf-8'))
     assert (response.status_code == 201)
 
+
+#test signin
+def test_signin_int_email():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[0]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+def test_signin_empty_email():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[1]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+def test_signin_wrong_email1():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[2]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+def test_signin_wrong_email2():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[3]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+def test_signin_int_password():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[4]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+def test_signup_poor_password():
+    result = app.test_client()
+    response = result.post('/auth/signin', data=json.dumps(mock_log[5]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert(response.status_code == 400)
+
+
+def test_signin_correct_data():
+    with app.app_context():
+        result = app.test_client()
+        response = result.post('/auth/signin', data=json.dumps(mock_log[6]),content_type='application/json')
+        json.loads(response.data.decode('utf-8'))
+        uname=mock_reg[4].get('username')
+        assert response != login_token(uname)

@@ -33,4 +33,21 @@ class UserAuthValidator(object):
             api.abort(400, "A username is not a number or empty: {} ".format(self.username))
 
         return True
+    
+    @staticmethod
+    def signinValidator(email,password):
+        #check if email has @ and .com and is type string
+        if type(email) != str:
+            api.abort(400, "An email is a string not a number:{} ".format(email))
+        
+        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" , email):
+            api.abort(400, "Email: {} is not well formatted (Must have @ and .com)".format(email))
+
+        elif type(password) != str:
+            api.abort(400, "A password is a string not a number:{} ".format(password))
+
+        elif not re.match(r"[A-Za-z0-9@#$&*]{8,12}",password):
+             api.abort(400, "Password: {} is not well formatted".format(password))
+        
+        return True
 

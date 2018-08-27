@@ -14,6 +14,11 @@ user_signup = api.model('Sign Up', {
     'confirm_password':fields.String(required=True, description='Confirm your password'),
 })
 
+user_signin = api.model('Sign in', {
+    'email': fields.String(required=True, description='Your Email'),
+    'password': fields.String(required=True, description='Your password')
+})
+
 
 UAO=ManageUsersDAO()
 
@@ -28,3 +33,14 @@ class SignUp(Resource):
     @ns.response(201, 'Account created')
     def post(self):
         return UAO.add_user_details(api.payload)
+
+
+@ns.route('/signin')
+@ns.response(403, 'Email unknown')
+class Signin(Resource):
+    '''Allows a user to sign in'''
+    @ns.doc('Known user signin')
+    @ns.expect(user_signin)
+    @ns.response(200, 'Access Token')
+    def post(self):
+        return UAO.user_signin(api.payload)

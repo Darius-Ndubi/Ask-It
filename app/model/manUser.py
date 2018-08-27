@@ -1,6 +1,7 @@
 from app import api
 from app.utility.validUser import UserAuthValidator
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_jwt_extended import create_access_token
 
 
 class ManageUsersDAO(object):
@@ -35,3 +36,24 @@ class ManageUsersDAO(object):
             #print (self.users)
         
             return "Sign Up was successful proceed to Sign In",201
+
+
+    def user_signin(self,data):
+
+        data_check = UserAuthValidator.signinValidator(data['email'],data['password'])
+
+        if data_check == True and self.check_user_email(data['email']) != None:
+        
+
+            for user in self.users:
+                if user.get('email') == data['email']:
+                    user=user
+           
+            if check_password_hash(user.get('password'),data['password']):
+                access_token=create_access_token(user.get('id'))
+                return access_token
+                
+            else:
+                api.abort(401, "Password: {} is invalid".format(data['password']))
+
+        api.abort(404, "Sign in request for {} failed, user not signed up!".format(data['email']))  
