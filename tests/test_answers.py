@@ -38,6 +38,6 @@ def test_Answer_all_answers_to_question():
     with app.app_context():
         result = app.test_client()
         tok=login_token(mock_reg[4].get('id'))
-        response = result.get('/questions/2/answers',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        response = result.get('/questions/3/answers',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         assert(response.status_code == 200)

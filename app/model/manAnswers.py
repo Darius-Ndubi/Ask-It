@@ -40,5 +40,5 @@ class AnswerDAO(QuestionDAO):
                     answers=question['answers']
                     return answers
 
-        api.abort(404, "answers for question {} dont exist".format(question_id))
-        #api.abort(403, "You are not the creator of question {} ".format(id))
+            api.abort(404, "answers for question {} dont exist".format(question_id))
+        

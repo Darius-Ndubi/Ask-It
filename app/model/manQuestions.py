@@ -14,6 +14,8 @@ class QuestionDAO(object):
         for user in UAO.users:
             if user.get('id') == user_id:
                 return user['username']
+            else:
+                api.abort(403, "You are not the creator of question {} ".format(id))
     
     def get(self, id):
         # if id <= 0:
