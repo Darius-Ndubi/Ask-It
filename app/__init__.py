@@ -20,3 +20,6 @@ api.add_namespace(auth)
 
 from resources.questions import ns as questions
 api.add_namespace (questions)
+
+from resources.answers import ns as questions
+api.add_namespace (questions)

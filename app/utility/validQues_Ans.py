@@ -16,3 +16,11 @@ class UserQuestionValidator(object):
             api.abort(400, "Descriptino is not a number or empty or less than 10 characters. Your input is: {} ".format(self.description))
 
         return True
+
+    @staticmethod
+    def answerValidator(description):
+        #description check
+        if type(description) != str or description.isspace() or len(description) < 10:
+            api.abort(400, "Descriptino is not a number or empty or less than 10 characters. Your input is: {} ".format(description))
+
+        return True
