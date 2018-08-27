@@ -31,3 +31,14 @@ class AnswerDAO(QuestionDAO):
                         return answer
             api.abort(404, "question {} dont exist".format(question_id))   
 
+
+    def find_all_answers_to_question(self,question_id,user_id):
+        uname=DAO.get_username(user_id)
+        if uname != None :
+            for question in DAO.questions:
+                if question.get('id') == question_id:
+                    answers=question['answers']
+                    return answers
+
+        api.abort(404, "answers for question {} dont exist".format(question_id))
+        #api.abort(403, "You are not the creator of question {} ".format(id))

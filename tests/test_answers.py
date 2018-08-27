@@ -32,3 +32,12 @@ def test_Answer_successfull_description_post():
         response = result.post('/questions/3/answers', data=json.dumps(mock_ans[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         assert(response.status_code == 201)
+
+
+def test_Answer_all_answers_to_question():
+    with app.app_context():
+        result = app.test_client()
+        tok=login_token(mock_reg[4].get('id'))
+        response = result.get('/questions/2/answers',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        assert(response.status_code == 200)

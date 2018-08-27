@@ -10,7 +10,9 @@ install:
 
 script:
   - cd tests
-  - nosetests  --with-coverage --cover-package=resources
+  - nosetests test_user_auth.py --with-coverage --cover-package=resources.user_auth
+  - nosetests test_questions.py --with-coverage --cover-package=resources.questions
+  - nosetests test_answers.py --with-coverage --cover-package=resources.answers
 
 after_success:
   - coveralls

@@ -16,6 +16,16 @@ AAO=AnswerDAO()
 class Answer(Resource):
 
     @jwt_required
+    @ns.doc('List answers to question')
+    @ns.marshal_list_with(answer,code=200) 
+    def get(self,question_id):
+        '''Geting all answers to a question'''
+
+        user_id = get_jwt_identity()
+        return AAO.find_all_answers_to_question (question_id,user_id),200
+
+
+    @jwt_required
     @ns.doc('create_answer')
     @ns.expect(answer)
     @ns.marshal_with(answer, code=201)
