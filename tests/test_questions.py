@@ -34,3 +34,9 @@ def test_QuestionList_successfull_get():
     result = app.test_client()
     response = result.get('/questions/',content_type='application/json')
     assert(response.status_code == 200)
+
+
+def test_Question_successfull_get():
+    result = app.test_client()
+    response = result.get('/questions/1',content_type='application/json')
+    assert(response.status_code == 200)

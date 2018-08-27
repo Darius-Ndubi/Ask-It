@@ -14,7 +14,18 @@ class QuestionDAO(object):
         for user in UAO.users:
             if user.get('id') == user_id:
                 return user['username']
-                
+    
+    def get(self, id):
+        # if id <= 0:
+        #    api.abort(400, "Request {} could not be fulfilled due to bad request".format(id)) 
+        
+        # else:
+        for question in self.questions:
+            if question['id'] == id:
+                return question
+        api.abort(404, "question {} doesn't exist".format(id))
+        
+
     def create(self, data,user_id):
         #validate user data
         questionValidatorO = UserQuestionValidator(data['title'],data['description'])

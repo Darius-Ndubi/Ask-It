@@ -48,3 +48,16 @@ class QuestionList(Resource):
 
         user_id=get_jwt_identity()
         return DAO.create(api.payload,user_id), 201
+
+
+@ns.route('/<int:id>')
+@ns.response(404, 'question not found')
+@ns.param('id', 'The question identifier')
+class Question(Resource):
+    '''Show a single question item and lets you delete them'''
+    @ns.doc('get_question')
+    @ns.marshal_with(question)
+    def get(self, id):
+        '''Fetch a given resource'''
+        return DAO.get(id)
+
