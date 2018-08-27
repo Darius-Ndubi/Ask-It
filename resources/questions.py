@@ -71,3 +71,15 @@ class Question(Resource):
 
         user_id = get_jwt_identity()
         return DAO.update_question(id, api.payload,user_id)
+
+
+
+    @jwt_required
+    @ns.doc('delete_question')
+    @ns.response(204, 'question deleted')
+    def delete(self, id):
+        '''Delete a title given its identifier'''
+
+        user_id = get_jwt_identity()
+        DAO.delete_question(id,user_id)
+        return '', 204

@@ -40,6 +40,7 @@ class QuestionDAO(object):
             self.questions.append(question)
             return question
 
+
     def update_question(self, id, data, user_id):
 
         questionValidatorO = UserQuestionValidator(data['title'],data['description'])
@@ -55,3 +56,13 @@ class QuestionDAO(object):
 
             else:       
                 api.abort(403, "You are not the creator of question {} ".format(id))
+
+
+    def delete_question(self, id,user_id):
+        uname=self.get_username(user_id)
+        question = self.get(id)
+        
+        if question.get('username') == uname:
+            self.questions.remove(question)
+        else:       
+            api.abort(403, "You are not the creator of question {} ".format(id))

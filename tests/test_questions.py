@@ -49,3 +49,14 @@ def test_QuestionList_successfull_put():
         tok=login_token(mock_reg[4].get('id'))
         response = result.put('/questions/4', data=json.dumps(mock_ques[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         assert(response.status_code == 200)
+
+
+"""
+    test delete question
+"""
+def test_QuestionList_successfull_delete():
+    with app.app_context():
+        result = app.test_client()
+        tok=login_token(mock_reg[4].get('id'))
+        response = result.delete('/questions/4', data=json.dumps(mock_ques[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert(response.status_code == 204)
