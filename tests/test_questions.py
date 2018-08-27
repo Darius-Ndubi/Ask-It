@@ -40,3 +40,10 @@ def test_Question_successfull_get():
     result = app.test_client()
     response = result.get('/questions/1',content_type='application/json')
     assert(response.status_code == 200)
+
+def test_QuestionList_successfull_put():
+    with app.app_context():
+        result = app.test_client()
+        tok=login_token(mock_reg[4].get('id'))
+        response = result.put('/questions/4', data=json.dumps(mock_ques[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert(response.status_code == 200)

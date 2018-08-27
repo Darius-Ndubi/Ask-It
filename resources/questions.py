@@ -61,3 +61,13 @@ class Question(Resource):
         '''Fetch a given resource'''
         return DAO.get(id)
 
+
+
+    @jwt_required
+    @ns.expect(question)
+    @ns.marshal_with(question)
+    def put(self, id):
+        '''Update a title given its identifier'''
+
+        user_id = get_jwt_identity()
+        return DAO.update_question(id, api.payload,user_id)

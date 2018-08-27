@@ -1,1 +1,3 @@
-{}
+{
+  "test_questions.py::test_QuestionList_successfull_put": true
+}

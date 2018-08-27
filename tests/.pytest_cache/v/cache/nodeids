@@ -1,7 +1,10 @@
 [
   "test_questions.py::test_QuestionList_empty_title",
   "test_questions.py::test_QuestionList_empty_description",
-  "test_questions.py::test_QuestionList_successfull",
+  "test_questions.py::test_QuestionList_successfull_post",
+  "test_questions.py::test_QuestionList_successfull_get",
+  "test_questions.py::test_Question_successfull_get",
+  "test_questions.py::test_QuestionList_successfull_put",
   "test_user_auth.py::test_signup_empty_email",
   "test_user_auth.py::test_signup_wrong_email1",
   "test_user_auth.py::test_signup_wrong_email2",
