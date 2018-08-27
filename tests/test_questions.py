@@ -41,6 +41,8 @@ def test_Question_successfull_get():
     response = result.get('/questions/1',content_type='application/json')
     assert(response.status_code == 200)
 
+#test on user edit question
+
 def test_QuestionList_successfull_put():
     with app.app_context():
         result = app.test_client()
