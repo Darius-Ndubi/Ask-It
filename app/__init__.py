@@ -17,3 +17,6 @@ api = Api(app, version='1.0', title='Ask It API',
 
 from resources.user_auth import ns as auth
 api.add_namespace(auth)
+
+from resources.questions import ns as questions
+api.add_namespace (questions)

@@ -8,7 +8,7 @@ mock_reg=[{"email":"","username":"delight","password":"delight","confirm_passwor
           {"email":"yagamidelight@gmail","username":"delight","password":"delight","confirm_password":"delight"},
           {"email":123454,"username":"delight","password":"delight","confirm_password":"delight"},
 
-          {"email":"yagamidelight@gmail.com","username":"delight","password":"string@12","confirm_password":"string@12"},
+          {"id":1,"email":"yagamidelight@gmail.com","username":"delight","password":"string@12","confirm_password":"string@12"},
 
           {"email":"yagamidelight@gmail.com","username":"delight","password":123,"confirm_password":123},
           {"email":"yagamidelight@gmail.com","username":"delight","password":"delight@11","confirm_password":"delight@1"},
@@ -31,8 +31,8 @@ mock_log=[{"email":123,"password":"delight"},
 ]
 
 #create_login_token
-def login_token(uname):
-    access_token = create_access_token(uname)
+def login_token(user_id):
+    access_token = create_access_token(user_id)
     return access_token
 
 
@@ -152,5 +152,5 @@ def test_signin_correct_data():
         result = app.test_client()
         response = result.post('/auth/signin', data=json.dumps(mock_log[6]),content_type='application/json')
         json.loads(response.data.decode('utf-8'))
-        uname=mock_reg[4].get('username')
-        assert response != login_token(uname)
+        user_id=mock_reg[4].get('id')
+        assert response != login_token(user_id)
