@@ -32,26 +32,37 @@ class AnswerDAO(QuestionDAO):
             api.abort(404, "question {} dont exist".format(question_id))   
 
 
-    def find_all_answers_to_question(self,question_id,user_id):
-        uname=DAO.get_username(user_id)
-        if uname != None :
-            for question in DAO.questions:
-                if question.get('id') == question_id:
-                    answers=question['answers']
-                    return answers
+    def find_all_answers_to_question(self,question_id):
+        
+        for question in DAO.questions:
+            if question.get('id') == question_id:
+                answers=question['answers']
+                return answers
 
-            api.abort(404, "answers for question {} dont exist".format(question_id))
+        api.abort(404, "answers for question {} dont exist".format(question_id))
         
 
-    def find_specific_answer_to_question(self,question_id,answer_id,user_id):
-        uname=DAO.get_username(user_id)
-        answers=self.find_all_answers_to_question(question_id,user_id)
+    def find_specific_answer_to_question(self,question_id,answer_id):
+        answers=self.find_all_answers_to_question(question_id)
 
-        if uname != None:
-            for answer in answers:
-                if answer.get('id') == answer_id:
-                    return answer
+        for answer in answers:
+            if answer.get('id') == answer_id:
+                answer=answer
+                return answer
                 
-                else:
-                    api.abort(404, "The answer {} dont exist".format(answer_id))
+
+        api.abort(404, "The answer {} dont exist".format(answer_id))
+
+
+    def delete_specific_answer_by_question(self,question_id,answer_id,user_id):
+        uname=DAO.get_username(user_id)
+
+        to_delete = self.find_specific_answer_to_question(question_id,answer_id)
+
+        answers=self.find_all_answers_to_question(question_id)
+        
+        if to_delete.get('username') == uname:
+            answers.remove(to_delete)
+        else:
+            api.abort(403, "You are not the creator of answer {} ".format(answer_id))
                 

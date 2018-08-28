@@ -4,6 +4,8 @@
   "test_answers.py::test_Answer_successfull_description_post",
   "test_answers.py::test_Answer_all_answers_to_question",
   "test_answers.py::test_AnswerActions_locate_answer_by_id",
+  "test_answers.py::test_AnswerActions_delete_answer_by_id",
+  "test_answers.py::test_AnswerActions_delete_answer_by_id_deleted_answer",
   "test_questions.py::test_QuestionList_empty_title",
   "test_questions.py::test_QuestionList_empty_description",
   "test_questions.py::test_QuestionList_successfull_post",

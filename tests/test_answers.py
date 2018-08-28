@@ -50,3 +50,18 @@ def test_AnswerActions_locate_answer_by_id():
         response = result.get('/questions/3/answers/2',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         assert(response.status_code == 200)
+
+
+def test_AnswerActions_delete_answer_by_id():
+    with app.app_context():
+        result = app.test_client()
+        tok=login_token(mock_reg[4].get('id'))
+        response = result.delete('/questions/3/answers/2',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert(response.status_code == 204)
+
+def test_AnswerActions_delete_answer_by_id_deleted_answer():
+    with app.app_context():
+        result = app.test_client()
+        tok=login_token(mock_reg[4].get('id'))
+        response = result.delete('/questions/3/answers/2',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert(response.status_code == 404)

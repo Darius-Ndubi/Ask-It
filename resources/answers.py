@@ -20,9 +20,7 @@ class Answer(Resource):
     @ns.marshal_list_with(answer,code=200) 
     def get(self,question_id):
         '''Geting all answers to a question'''
-
-        user_id = get_jwt_identity()
-        return AAO.find_all_answers_to_question (question_id,user_id),200
+        return AAO.find_all_answers_to_question (question_id),200
 
 
     @jwt_required
@@ -48,6 +46,15 @@ class AnswerActions(Resource):
     @ns.marshal_with(answer, code=200)
     def get(self,question_id,answer_id):
         '''locate an answer by its id'''
+        return AAO.find_specific_answer_to_question (question_id,answer_id)
 
+    
+    @jwt_required
+    @ns.doc('delete answer from question')
+    @ns.response(204, 'answer deleted')
+    def delete(self,question_id,answer_id):
+        '''Delete a specific answer from answers of a question'''
+        
         user_id = get_jwt_identity()
-        return AAO.find_specific_answer_to_question (question_id,answer_id,user_id)
+        AAO.delete_specific_answer_by_question(question_id,answer_id,user_id)
+        return '' ,204
